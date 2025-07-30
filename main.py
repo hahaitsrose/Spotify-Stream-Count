@@ -1,17 +1,20 @@
-import functions
-import functions.albumfuncs
-import functions.trackfuncs
+import handlers.totphandler as totphand
+from classes.album import Album as albobj
+from classes.track import Track as trobj
 
-data_link = input("Enter the link you wish to check (track or album)\n")
+metadata_link = input("Enter your link: ")
+to_print = None
 
-to_print = ""
+if "/album/" in metadata_link:
+    obj = albobj(metadata_link)
+    to_print = obj.get_streams()
 
-if "/track/" in data_link:
-    to_print = functions.trackfuncs.get_stream_count(data_link)
-elif "/album/" in data_link:
-    to_print = functions.albumfuncs.get_stream_count(data_link)
+elif "/track/" in metadata_link:
+    obj = trobj(metadata_link)
+    to_print = obj.get_streams()
+
 else:
-    print(f"{data_link} is not a valid type to check for.")
+    to_print = "Potentially a bad link?"
 
 print(to_print)
 
